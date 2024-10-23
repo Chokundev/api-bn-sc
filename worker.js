@@ -16,19 +16,26 @@ addEventListener('fetch', event => {
     } else {
       return new Response('API not found', { status: 404 })
     }
-  
-    // ส่งคำขอไปยัง Google Apps Script API
-    const apiResponse = await fetch(apiUrl, {
-      method: request.method,
-      headers: request.headers,
-    })
-  
-    // ดึงข้อมูลและส่ง response กลับไปให้ผู้ใช้
-    const data = await apiResponse.text()
-    return new Response(data, {
-      headers: { 'content-type': 'application/json' },
-    })
-  }
+  // ส่งคำขอไปยัง Google Apps Script API
+  const apiResponse = await fetch(apiUrl, {
+    method: request.method,
+    headers: request.headers,
+  })
 
-  // Release1 Nakagame API 23/10/2024
+  // ดึงข้อมูลจาก Google Apps Script API
+  const data = await apiResponse.text()
+
+  // คืนค่าพร้อมกับส่วนหัว CORS
+  return new Response(data, {
+    headers: {
+      'content-type': 'application/json',
+      'Access-Control-Allow-Origin': 'https://nakagame.bn-sc.cloud', // ระบุโดเมนที่อนุญาต
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', // กำหนดวิธีการที่อนุญาต
+      'Access-Control-Allow-Headers': 'Content-Type', // กำหนด headers ที่อนุญาต
+    },
+  })
+}
+
+
+  // Release2 Nakagame API 24/10/2024
   
