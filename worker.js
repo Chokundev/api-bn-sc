@@ -29,4 +29,6 @@ addEventListener('fetch', event => {
       headers: { 'content-type': 'application/json' },
     })
   }
+
+  // Release1 Nakagame API 23/10/2024
   
